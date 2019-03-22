@@ -65,7 +65,7 @@ module.exports = function (context) {
                         (platform.pod || []).forEach(function (pod) {
                             var name = pod.$.name || pod.$.id;
                             newPods.pods[name] = pod.$;
-                            log(newPods);
+                            log(pod.$);
                             log(`config.xml requires pod: ${name}`);
                         });
                     }
