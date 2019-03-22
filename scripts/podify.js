@@ -213,17 +213,17 @@ module.exports = function (context) {
             var buildConfigContext = fs.readFileSync('platforms/ios/cordova/build.xcconfig', 'utf8');
             var bridgedHeaderRegex;
             if (useFrameworks) {
-                log("useFrameworks " + podSource);
+                log("useFrameworks ");
                 bridgedHeaderRegex = /SWIFT_OBJC_BRIDGING_HEADER/g;
                 fs.writeFileSync('platforms/ios/cordova/build.xcconfig', buildConfigContext.replace(bridgedHeaderRegex, '//SWIFT_OBJC_BRIDGING_HEADER'));
             } else {
-                log("else useFrameworks " + podSource);
+                log("else useFrameworks ");
                 bridgedHeaderRegex = /\/\/SWIFT_OBJC_BRIDGING_HEADER/g;
                 fs.writeFileSync('platforms/ios/cordova/build.xcconfig', buildConfigContext.replace(bridgedHeaderRegex, 'SWIFT_OBJC_BRIDGING_HEADER'));
 
             }
               log("outside  if else " + JSON.stringify(podConfigPath));
-            fs.writeFileSync(podConfigPath, JSON.stringify(newPods, null, '\t'));
+            // fs.writeFileSync(podConfigPath, JSON.stringify(newPods, null, '\t'));
         } else {
             log('No new pods detects');
         }
