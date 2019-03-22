@@ -45,7 +45,7 @@ module.exports = function (context) {
     }
 
     log('Searching for new pods');
-    return Q.all(parsePluginXmls())
+    return Q.then(parsePluginXmls())
         .then(parseConfigXml)
         .then(createFiles)
         .then(installPods)
@@ -128,10 +128,7 @@ module.exports = function (context) {
                     }
                     
                  log('hook.js>> end');
-                    setTimeout(function(){
                     deferred.resolve();
-                        },2000);
-
                 }
             });
 
