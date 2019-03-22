@@ -93,6 +93,7 @@ module.exports = function (context) {
                                 const podsConfig = (platform['pods-config'] || [])[0];
 
                                 if (podsConfig) {
+                                    log(`podsConfig ${podsConfig}.`);
                                     iosMinVersion = maxVer(iosMinVersion, podsConfig.$ ? podsConfig.$['ios-min-version'] : iosMinVersion);
                                     useFrameworks = podsConfig.$ && podsConfig.$['use-frameworks'] === 'true' ? 'true' : useFrameworks;
 
@@ -105,10 +106,12 @@ module.exports = function (context) {
                                 // support native dependency specification
                                 // <framework src="GoogleCloudMessaging" type="podspec" spec="~> 1.2.0" />
                                 (platform.framework || []).forEach(framework => {
+                                    log(`framework ${framework}.`);
 
                                     if(framework.$.type === 'podspec') {
 
                                         let name = framework.$.src;
+                                        log(`podspec ${framework.$.type}.`);
                                         newPods.pods[name] = Object.assign({type: 'native'}, framework.$);
                                         log(`${id} requires pod: ${name}`);
                                     }
@@ -117,6 +120,7 @@ module.exports = function (context) {
                                 // <pod> tags takes precedence over <framework> cuz well... it's my plugin :)
                                 (platform.pod || []).forEach(function (pod) {
                                     var name = pod.$.name || pod.$.id;
+                                    log(`pod ${name}.`);
                                     newPods.pods[name] = Object.assign({type: 'pod'}, pod.$);
                                     log(`${id} requires pod: ${name}`);
                                 });
@@ -137,9 +141,10 @@ module.exports = function (context) {
 
         newPods.iosMinVersion = iosMinVersion;
         newPods.useFrameworks = useFrameworks === 'true';
+             log(`createFiles ${podified} currentPods ${currentPods} isEqual: ${newPods}`);
 
         if (!podified || !_.isEqual(newPods, currentPods)) {
-
+             log(`${currentPods} isEqual pod: ${newPods}`);
             podfileContents.push("platform :ios, '" + iosMinVersion + "'");
             if (useFrameworks === 'true') {
                 podfileContents.push("use_frameworks!");
@@ -234,13 +239,19 @@ module.exports = function (context) {
                 var podInstall = spawn('pod', ['install'], {
                     cwd: 'platforms/ios'
                 });
+               log("podInstall");
+
                 podInstall.stdout.on('data', function (data) {
                     log(data.toString('utf8'));
+                    log("data");
+
                 });
                 podInstall.stderr.on('data', function (data) {
+                     log("data");
                     console.error(data.toString('utf8'));
                 });
                 podInstall.on('close', function (exitCode) {
+                     log("close");
                     deferred.resolve(exitCode === 0);
                 });
             } else {
@@ -262,10 +273,12 @@ module.exports = function (context) {
             var content = fs.readFileSync(podsResourcesSh, 'utf8');
 
             bundlePathsToFix.forEach(function (path) {
+                log("path");
                 var fixedPath = appName + '.app/' + path.split('/').slice(1).join('/');
+                log(fixedPath);
                 var regex = new RegExp('(install_resource.*)' + path, 'gi');
                 content = content.replace(regex, "$1" + fixedPath);
-
+                log(content);
             });
             fs.writeFileSync(podsResourcesSh, content);
         }
