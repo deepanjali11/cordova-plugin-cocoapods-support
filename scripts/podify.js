@@ -223,7 +223,7 @@ module.exports = function (context) {
 
             }
               log("outside  if else " + JSON.stringify(podConfigPath));
-            // fs.writeFileSync(podConfigPath, JSON.stringify(newPods, null, '\t'));
+            fs.writeFileSync(podConfigPath, JSON.stringify(newPods, null, '\t'));
         } else {
             log('No new pods detects');
         }
