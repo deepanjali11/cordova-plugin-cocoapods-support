@@ -12,9 +12,6 @@ module.exports = function (context) {
         log('context:function');
         log(context);
     if (!context.opts.platforms || !context.opts.platforms.includes('ios')) {
-                log('context:ios');
-
-        log(context);
         return;
     }
 
@@ -92,7 +89,8 @@ module.exports = function (context) {
                     if (data.plugin.platform) {
                         log(`Checking ${id} for pods.`);
                         data.plugin.platform.forEach(function (platform) {
-
+                         log(`platform for each`);
+                         log(platform.$.name);
                             if (platform.$.name === 'ios') {
                                 const podsConfig = (platform['pods-config'] || [])[0];
 
@@ -113,7 +111,6 @@ module.exports = function (context) {
                                     log(`framework ${framework}.` + JSON.stringify(framework));
 
                                     if(framework.$.type === 'podspec') {
-
                                         let name = framework.$.src;
                                         log(`podspec ${framework.$.type}.`);
                                         newPods.pods[name] = Object.assign({type: 'native'}, framework.$);
@@ -135,7 +132,7 @@ module.exports = function (context) {
                  log('hook.js>> end');
                     setTimeout(function(){
                     deferred.resolve();
-                        }, 1000);
+                        },2000);
 
                 }
             });
