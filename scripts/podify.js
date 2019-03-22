@@ -150,9 +150,10 @@ module.exports = function (context) {
         if (!podified || !_.isEqual(newPods, currentPods)) {
              log(currentPods);
              log(newPods);
-            podfileContents.push("platform :ios, '" + iosMinVersion + "'");
             if (useFrameworks === 'true') {
+                podfileContents.push("platform :ios, '" + iosMinVersion + "'");
                 podfileContents.push("use_frameworks!");
+
             }
 
             Object.keys(newPods.sources).forEach(function (podSource) {
