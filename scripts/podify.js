@@ -9,8 +9,12 @@ var parser = new xml2js.Parser();
 require('shelljs/global');
 
 module.exports = function (context) {
-
+        log('context:function');
+        log(context);
     if (!context.opts.platforms || !context.opts.platforms.includes('ios')) {
+                log('context:ios');
+
+        log(context);
         return;
     }
 
@@ -46,6 +50,7 @@ module.exports = function (context) {
     }
 
     log('Searching for new pods');
+        log(context);
 
     return Q.all(parsePluginXmls())
         .then(parseConfigXml)
@@ -127,7 +132,7 @@ module.exports = function (context) {
                             }
                         });
                     }
-
+                 log('hook.js>> end');
                     deferred.resolve();
                 }
             });
@@ -257,6 +262,7 @@ module.exports = function (context) {
                     deferred.resolve(exitCode === 0);
                 });
             } else {
+                log('hook.js>>pod else');
                 deferred.resolve(false);
             }
 
