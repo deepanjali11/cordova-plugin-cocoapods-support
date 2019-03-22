@@ -60,10 +60,13 @@ module.exports = function (context) {
                 log('Checking config.xml for pods.');
                 data.widget.platform.forEach(function (platform) {
                     if (platform.$.name === 'ios') {
-                        log('platform');
+                        log('platform-->');
+                        log(platform.pod)
                         (platform.pod || []).forEach(function (pod) {
+                            log(pod);
                             var name = pod.$.name || pod.$.id;
                             newPods.pods[name] = pod.$;
+                            log(newPods);
                             log(`config.xml requires pod: ${name}`);
                         });
                     }
