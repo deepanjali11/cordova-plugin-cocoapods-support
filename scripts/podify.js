@@ -45,7 +45,7 @@ module.exports = function (context) {
     }
 
     log('Searching for new pods');
-    return Q.then(parsePluginXmls())
+    return Q.all(parsePluginXmls())
         .then(parseConfigXml)
         .then(createFiles)
         .then(installPods)
@@ -106,7 +106,8 @@ module.exports = function (context) {
                                 // support native dependency specification
                                 // <framework src="GoogleCloudMessaging" type="podspec" spec="~> 1.2.0" />
                                 (platform.framework || []).forEach(framework => {
-                                    log(`framework ${framework}.` + JSON.stringify(framework));
+                                    log('---framework')
+                                    log(`framework 0` + JSON.stringify(framework));
 
                                     if(framework.$.type === 'podspec') {
                                         let name = framework.$.src;
@@ -147,7 +148,7 @@ module.exports = function (context) {
         if (!podified || !_.isEqual(newPods, currentPods)) {
              log(currentPods);
              log(newPods);
-            podfileContents.push("platform :ios, '" + iosMinVersion + "'");
+           // podfileContents.push("platform :ios, '" + iosMinVersion + "'");
             if (useFrameworks === 'true') {
                 podfileContents.push("use_frameworks!");
             }
