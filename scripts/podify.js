@@ -61,11 +61,10 @@ module.exports = function (context) {
                 data.widget.platform.forEach(function (platform) {
                     if (platform.$.name === 'ios') {
                         log('platform-->');
-                        log(platform.pod)
                         (platform.pod || []).forEach(function (pod) {
                             var name = pod.$.name || pod.$.id;
                             newPods.pods[name] = pod.$;
-                            log(pod.$);
+                            log(`pod name ${name}`);
                             log(`config.xml requires pod: ${name}`);
                         });
                     }
