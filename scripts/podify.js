@@ -79,8 +79,8 @@ module.exports = function (context) {
         context.opts.cordova.plugins.forEach(id => {
 
             const deferred = Q.defer();
-
-            parser.parseString(fs.readFileSync('plugins/' + id + '/plugin.xml'), function (err, data) {
+            log(`${id}`);
+            parser.parseString(fs.readFileSync(`plugins/${id}/plugin.xml`), function (err, data) {
                log('hook data>>' + JSON.stringify(data));
                 if (err) {
                  log('hook.js>> err');
