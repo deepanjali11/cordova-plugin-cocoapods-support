@@ -106,7 +106,7 @@ module.exports = function (context) {
                                 // support native dependency specification
                                 // <framework src="GoogleCloudMessaging" type="podspec" spec="~> 1.2.0" />
                                 (platform.framework || []).forEach(framework => {
-                                    log(`framework ${framework}.`);
+                                    log(`framework ${framework}.` + JSON.stringify(framework));
 
                                     if(framework.$.type === 'podspec') {
 
@@ -213,14 +213,16 @@ module.exports = function (context) {
             var buildConfigContext = fs.readFileSync('platforms/ios/cordova/build.xcconfig', 'utf8');
             var bridgedHeaderRegex;
             if (useFrameworks) {
+                log("useFrameworks " + podSource);
                 bridgedHeaderRegex = /SWIFT_OBJC_BRIDGING_HEADER/g;
                 fs.writeFileSync('platforms/ios/cordova/build.xcconfig', buildConfigContext.replace(bridgedHeaderRegex, '//SWIFT_OBJC_BRIDGING_HEADER'));
             } else {
+                log("else useFrameworks " + podSource);
                 bridgedHeaderRegex = /\/\/SWIFT_OBJC_BRIDGING_HEADER/g;
                 fs.writeFileSync('platforms/ios/cordova/build.xcconfig', buildConfigContext.replace(bridgedHeaderRegex, 'SWIFT_OBJC_BRIDGING_HEADER'));
 
             }
-
+              log("outside  if else " + JSON.stringify(podConfigPath));
             fs.writeFileSync(podConfigPath, JSON.stringify(newPods, null, '\t'));
         } else {
             log('No new pods detects');
@@ -243,11 +245,11 @@ module.exports = function (context) {
 
                 podInstall.stdout.on('data', function (data) {
                     log(data.toString('utf8'));
-                    log("data");
+                    log("data" + JSON.stringify(data.toString('utf8')));
 
                 });
                 podInstall.stderr.on('data', function (data) {
-                     log("data");
+                     log("error");
                     console.error(data.toString('utf8'));
                 });
                 podInstall.on('close', function (exitCode) {
