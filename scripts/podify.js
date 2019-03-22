@@ -78,9 +78,9 @@ module.exports = function (context) {
         var promises = [];
         context.opts.cordova.plugins.forEach(id => {
 
-            const deferred = Q.defer();
-            log(`${id}`);
-            parser.parseString(fs.readFileSync(`plugins/${id}/plugin.xml`), function (err, data) {
+            const deferred = new Q.defer();
+
+            parser.parseString(fs.readFileSync('plugins/' + id + '/plugin.xml'), function (err, data) {
                log('hook data>>' + JSON.stringify(data));
                 if (err) {
                  log('hook.js>> err');
@@ -131,7 +131,9 @@ module.exports = function (context) {
                     }
                     
                  log('hook.js>> end');
+                     setTimeout(function(){
                     deferred.resolve();
+                    }, 1000);
                 }
             });
 
@@ -150,10 +152,9 @@ module.exports = function (context) {
         if (!podified || !_.isEqual(newPods, currentPods)) {
              log(currentPods);
              log(newPods);
+            podfileContents.push("platform :ios, '" + iosMinVersion + "'");
             if (useFrameworks === 'true') {
-                podfileContents.push("platform :ios, '" + iosMinVersion + "'");
                 podfileContents.push("use_frameworks!");
-
             }
 
             Object.keys(newPods.sources).forEach(function (podSource) {
