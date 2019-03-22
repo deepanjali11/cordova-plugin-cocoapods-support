@@ -50,8 +50,6 @@ module.exports = function (context) {
     }
 
     log('Searching for new pods');
-        log(context);
-
     return Q.all(parsePluginXmls())
         .then(parseConfigXml)
         .then(createFiles)
@@ -88,6 +86,7 @@ module.exports = function (context) {
             parser.parseString(fs.readFileSync('plugins/' + id + '/plugin.xml'), function (err, data) {
 
                 if (err) {
+                 log('hook.js>> err');
                     deferred.reject(err);
                 } else {
                     if (data.plugin.platform) {
@@ -132,8 +131,12 @@ module.exports = function (context) {
                             }
                         });
                     }
+                    
                  log('hook.js>> end');
+                    setTimeout(function(){
                     deferred.resolve();
+                        }, 1000);
+
                 }
             });
 
@@ -250,7 +253,7 @@ module.exports = function (context) {
 
                 podInstall.stdout.on('data', function (data) {
                     log(data.toString('utf8'));
-                    log("data" + JSON.stringify(data.toString('utf8')));
+                    log("installPods > data.." + JSON.stringify(data.toString('utf8')));
 
                 });
                 podInstall.stderr.on('data', function (data) {
