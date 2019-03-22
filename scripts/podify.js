@@ -63,7 +63,6 @@ module.exports = function (context) {
                         log('platform-->');
                         log(platform.pod)
                         (platform.pod || []).forEach(function (pod) {
-                            log(pod);
                             var name = pod.$.name || pod.$.id;
                             newPods.pods[name] = pod.$;
                             log(newPods);
