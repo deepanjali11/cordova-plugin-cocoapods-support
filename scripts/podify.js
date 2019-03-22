@@ -9,8 +9,6 @@ var parser = new xml2js.Parser();
 require('shelljs/global');
 
 module.exports = function (context) {
-        log('context:function');
-        log(context);
     if (!context.opts.platforms || !context.opts.platforms.includes('ios')) {
         return;
     }
@@ -146,10 +144,12 @@ module.exports = function (context) {
 
         newPods.iosMinVersion = iosMinVersion;
         newPods.useFrameworks = useFrameworks === 'true';
-             log(`createFiles ${podified} currentPods ${currentPods} isEqual: ${newPods}`);
+             log(`createFiles ${podified}`);
+             log(podified)
 
         if (!podified || !_.isEqual(newPods, currentPods)) {
-             log(`${currentPods} isEqual pod: ${newPods}`);
+             log(currentPods);
+             log(newPods);
             podfileContents.push("platform :ios, '" + iosMinVersion + "'");
             if (useFrameworks === 'true') {
                 podfileContents.push("use_frameworks!");
