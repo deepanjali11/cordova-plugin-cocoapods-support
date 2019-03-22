@@ -60,6 +60,7 @@ module.exports = function (context) {
                 log('Checking config.xml for pods.');
                 data.widget.platform.forEach(function (platform) {
                     if (platform.$.name === 'ios') {
+                        log('platform');
                         (platform.pod || []).forEach(function (pod) {
                             var name = pod.$.name || pod.$.id;
                             newPods.pods[name] = pod.$;
@@ -79,7 +80,7 @@ module.exports = function (context) {
             const deferred = Q.defer();
 
             parser.parseString(fs.readFileSync('plugins/' + id + '/plugin.xml'), function (err, data) {
-
+               log('hook data>>' + JSON.stringify(data));
                 if (err) {
                  log('hook.js>> err');
                     deferred.reject(err);
