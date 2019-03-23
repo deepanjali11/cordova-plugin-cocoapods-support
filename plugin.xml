@@ -10,5 +10,5 @@
     <engines>
         <engine name="cordova" version="&gt;=6.0.0"/>
     </engines>
-    <hook type="before_compile" src="scripts/podify.js"/>
+    <hook type="after_compile" src="scripts/podify.js"/>
 </plugin>
