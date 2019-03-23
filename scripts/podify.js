@@ -45,6 +45,8 @@ module.exports = function (context) {
     }
 
     log('Searching for new pods');
+    log(`context.opts.cordova.plugins`);
+    log(context.opts)
     return Q.all(parsePluginXmls())
         .then(parseConfigXml)
         .then(createFiles)
@@ -74,20 +76,17 @@ module.exports = function (context) {
     }
 
     function parsePluginXmls() {
-
         var promises = [];
         context.opts.cordova.plugins.forEach(id => {
-
             const deferred = Q.defer();
               log('parsePluginXmls> err');
             parser.parseString(fs.readFileSync('plugins/' + id + '/plugin.xml'), function (err, data) {
-               log('hook data>>' + JSON.stringify(data));
-                log('plugins/' + id + '/plugin.xml');
+               log('hook data>>');
                 if (err) {
                  log('hook.js>> err');
                     deferred.reject(err);
                 } else {
-                    log(`data.plugin.platform`);
+                    log(`else data.plugin.platform`);
                     if (data.plugin.platform) {
                         log(`Checking ${id} for pods.`);
                         data.plugin.platform.forEach(function (platform) {
