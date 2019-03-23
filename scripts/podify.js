@@ -90,13 +90,11 @@ module.exports = function (context) {
                     if (data.plugin.platform) {
                         log(`Checking ${id} for pods.`);
                         data.plugin.platform.forEach(function (platform) {
-                         log(`platform for each`);
                          log(platform.$.name);
                             if (platform.$.name === 'ios') {
                                 const podsConfig = (platform['pods-config'] || [])[0];
 
                                 if (podsConfig) {
-                                    log(`podsConfig ${podsConfig}.`);
                                     iosMinVersion = maxVer(iosMinVersion, podsConfig.$ ? podsConfig.$['ios-min-version'] : iosMinVersion);
                                     useFrameworks = podsConfig.$ && podsConfig.$['use-frameworks'] === 'true' ? 'true' : useFrameworks;
 
@@ -134,7 +132,7 @@ module.exports = function (context) {
                  log('hook.js>> end');
                      setTimeout(function(){
                     deferred.resolve();
-                    }, 1000);
+                    }, 6000);
                 }
             });
 
