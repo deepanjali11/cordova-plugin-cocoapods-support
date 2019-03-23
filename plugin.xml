@@ -11,9 +11,10 @@
         <engine name="cordova" version="&gt;=6.0.0"/>
     </engines>
 
-    <hook type="after_prepare" src="scripts/podify.js"/>
+    <!--<hook type="after_prepare" src="scripts/podify.js"/>-->
     <platform name="ios">
     <hook type="after_platform_add" src="scripts/podify.js" />
     <hook type="after_plugin_add" src="scripts/podify.js" />
+    <hook type="after_plugin_install" src="scripts/podify.js"/>
   </platform>
 </plugin>
