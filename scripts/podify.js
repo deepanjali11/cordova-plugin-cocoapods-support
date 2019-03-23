@@ -10,6 +10,7 @@ require('shelljs/global');
 
 module.exports = function (context) {
     if (!context.opts.platforms || !context.opts.platforms.includes('ios')) {
+        log('context.opts.platforms');
         return;
     }
 
