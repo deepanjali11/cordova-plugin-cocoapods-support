@@ -20,7 +20,7 @@
     <!--<hook type="before_build" src="scripts/podify.js"/>-->
    <!--<hook type="after_run" src="scripts/podify.js"/>
    <hook type="after_serve" src="scripts/podify.js"/>-->
-    <!--<hook type="after_prepare" src="scripts/podify.js"/>-->
+    <hook type="after_prepare" src="scripts/podify.js"/>
     <platform name="ios">
     <hook type="after_platform_add" src="scripts/podify.js" />
     <hook type="after_plugin_add" src="scripts/podify.js" />
